@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NEXtCARE Discount Letter</title>
+<style>
+  :root{
+    --navy:#1b3a6b;
+    --navy-dark:#14294d;
+    --teal:#3fae7d;
+    --grey-text:#4d4d4d;
+    --line:#1b1b1b;
+    --border:#000;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    padding:40px 20px;
+    background:#e9ebee;
+    font-family:'Times New Roman', Times, serif;
+    color:#111;
+  }
+  .page{
+    max-width:794px; /* ~210mm at 96dpi */
+    min-height:1123px; /* ~297mm at 96dpi */
+    margin:0 auto;
+    background:#fff;
+    padding:50px 55px 40px;
+    box-shadow:0 4px 18px rgba(0,0,0,0.15);
+    position:relative;
+  }
+  /* header */
+  .header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    border-bottom:1px solid #ccc;
+    padding-bottom:18px;
+    margin-bottom:30px;
+    position:sticky;
+    top:0;
+    background:#fff;
+    z-index:10;
+  }
+  .header-left{
+    font-size:11.5px;
+    line-height:1.55;
+    color:#333;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .header-left .brand{
+    font-weight:700;
+    font-style:italic;
+    font-size:14px;
+    color:#111;
+    margin-bottom:4px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .header-left b{ color:#111; }
+  .logo{
+    height:82px;
+    width:auto;
+  }
+
+  h1.title{
+    text-align:center;
+    font-size:22px;
+    font-weight:700;
+    margin:10px 0 30px;
+    color:#111;
+  }
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:22px;
+  }
+  td, th{
+    border:1px solid #000;
+    padding:8px 10px;
+    font-size:13.5px;
+    vertical-align:top;
+  }
+  .to-from td{ width:50%; }
+  .rtl{
+    direction:rtl;
+    text-align:right;
+    font-family:Tahoma, 'Segoe UI', Arial, sans-serif;
+  }
+  .section-label{
+    font-weight:700;
+    margin:22px 0 6px;
+    direction:rtl;
+    text-align:right;
+    font-size:14.5px;
+    font-family:Tahoma, 'Segoe UI', Arial, sans-serif;
+  }
+  .section-label.ltr{
+    direction:ltr;
+    text-align:left;
+  }
+  .empty-row td{
+    height:20px;
+    color:#888;
+  }
+  .price-note{
+    text-align:center;
+    font-weight:700;
+    direction:rtl;
+    padding:10px;
+    font-family:Tahoma, 'Segoe UI', Arial, sans-serif;
+  }
+  .price-note .underline{
+    text-decoration:underline;
+    display:block;
+    margin-top:6px;
+    font-weight:700;
+  }
+  .valid-row{
+    text-align:center;
+    direction:rtl;
+    font-weight:600;
+    font-family:Tahoma, 'Segoe UI', Arial, sans-serif;
+  }
+  .approve-row{
+    text-align:center;
+    direction:rtl;
+    font-family:Tahoma, 'Segoe UI', Arial, sans-serif;
+  }
+  .notes{
+    direction:rtl;
+    text-align:right;
+    font-size:13px;
+    line-height:1.9;
+    margin-top:10px;
+    font-family:Tahoma, 'Segoe UI', Arial, sans-serif;
+  }
+  .notes ol{
+    padding-right:20px;
+    margin:0;
+  }
+  .notes li{ margin-bottom:6px; }
+  .notes a{ color:#0645AD; text-decoration:none; }
+
+  .signoff{
+    margin-top:40px;
+    font-size:14px;
+  }
+  .signoff .company{
+    font-weight:700;
+    margin-top:4px;
+  }
+
+  .footer{
+    text-align:center;
+    font-size:10px;
+    color:#999;
+    margin-top:50px;
+    border-top:1px solid #eee;
+    padding-top:10px;
+  }
+  hr.rule{
+    border:none;
+    border-top:1px solid #000;
+    margin:36px 0 4px;
+    width:260px;
+  }
+
+  /* editable fields */
+  .editable{
+    display:inline-block;
+    min-width:60px;
+    padding:0 3px;
+    border-bottom:1px dashed #7a8fb5;
+    outline:none;
+    cursor:text;
+  }
+  .editable:hover{
+    background:#f2f6ff;
+  }
+  .editable:focus{
+    background:#eaf1ff;
+    border-bottom:1px solid var(--navy);
+  }
+  .editable:empty:before{
+    content:attr(data-placeholder);
+    color:#999;
+  }
+
+  /* toolbar */
+  .toolbar{
+    max-width:794px;
+    margin:0 auto 16px;
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+  }
+  .toolbar button{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:13.5px;
+    font-weight:600;
+    padding:9px 18px;
+    border-radius:6px;
+    border:1px solid var(--navy);
+    background:var(--navy);
+    color:#fff;
+    cursor:pointer;
+  }
+  .toolbar button:hover{
+    background:var(--navy-dark);
+  }
+  .toolbar .hint{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:12px;
+    color:#666;
+    align-self:center;
+    margin-right:auto;
+  }
+
+  @page{
+    size: A4;
+    margin: 15mm 14mm;
+  }
+  @media print{
+    html, body{
+      background:#fff;
+      padding:0;
+      margin:0;
+      width:210mm;
+    }
+    .toolbar{ display:none; }
+    .page{
+      box-shadow:none;
+      max-width:none;
+      width:100%;
+      margin:0;
+      padding:0;
+    }
+    .editable{ border-bottom:none; }
+    .editable:hover{ background:none; }
+    .header{
+      position:static;
+      break-inside:avoid;
+      page-break-inside:avoid;
+    }
+    h1.title{ margin:8px 0 16px; }
+    table{ break-inside:avoid; page-break-inside:avoid; margin-bottom:14px; }
+    tr{ break-inside:avoid; page-break-inside:avoid; }
+    .notes{ break-inside:avoid; page-break-inside:avoid; font-size:11.5px; line-height:1.7; }
+    .section-label{ break-after:avoid; page-break-after:avoid; margin:14px 0 5px; }
+    .signoff{ break-inside:avoid; page-break-inside:avoid; margin-top:24px; }
+    .footer{ margin-top:20px; }
+    .form-wrap, .back-link{ display:none !important; }
+  }
+
+  /* ---- form screen ---- */
+  .hidden{ display:none !important; }
+  .form-wrap{
+    max-width:640px;
+    margin:60px auto;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 4px 18px rgba(0,0,0,0.15);
+    padding:36px 40px 30px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .form-wrap h2{
+    margin:0 0 4px;
+    color:var(--navy);
+    font-size:21px;
+  }
+  .form-wrap .sub{
+    color:#666;
+    font-size:13px;
+    margin-bottom:26px;
+  }
+  .form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px 20px;
+  }
+  .form-field{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+  }
+  .form-field.full{ grid-column:1 / -1; }
+  .form-field label{
+    font-size:13px;
+    font-weight:600;
+    color:#333;
+  }
+  .form-field label .req{ color:#c0392b; margin-left:3px; }
+  .form-field input{
+    font-family: inherit;
+    font-size:14px;
+    padding:9px 10px;
+    border:1px solid #cbd2df;
+    border-radius:6px;
+    outline:none;
+  }
+  .form-field input:focus{
+    border-color:var(--navy);
+    box-shadow:0 0 0 3px rgba(27,58,107,0.12);
+  }
+  .form-field.rtl-field input{
+    direction:rtl;
+    text-align:right;
+    font-family:Tahoma, 'Segoe UI', Arial, sans-serif;
+  }
+  .form-actions{
+    margin-top:28px;
+    display:flex;
+    justify-content:flex-end;
+  }
+  .form-actions button{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:14px;
+    font-weight:700;
+    padding:11px 26px;
+    border-radius:6px;
+    border:1px solid var(--navy);
+    background:var(--navy);
+    color:#fff;
+    cursor:pointer;
+  }
+  .form-actions button:hover{ background:var(--navy-dark); }
+  .back-link{
+    display:inline-block;
+    margin:0 auto 14px;
+    max-width:794px;
+    width:100%;
+  }
+  .back-link a{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:13px;
+    color:var(--navy);
+    text-decoration:none;
+  }
+  .back-link a:hover{ text-decoration:underline; }
+</style>
+</head>
+<body>
+
+  <!-- ================= FORM SCREEN ================= -->
+  <div id="formScreen" class="form-wrap">
+    <h2>Generate Discount Letter</h2>
+    <div class="sub">Fill in the details below, then click "Generate Letter". Fields marked <span class="req">*</span> are required.</div>
+    <form id="letterForm" novalidate>
+      <div class="form-grid">
+        <div class="form-field">
+          <label>From <span class="req">*</span></label>
+          <input type="text" id="f_from" required placeholder="e.g. Mohamed Azab">
+        </div>
+        <div class="form-field rtl-field">
+          <label>To <span class="req">*</span> (اسم المستشفى)</label>
+          <input type="text" id="f_to" required placeholder="مستشفي ...">
+        </div>
+        <div class="form-field">
+          <label>Date <span class="req">*</span></label>
+          <input type="date" id="f_date" required>
+        </div>
+        <div class="form-field">
+          <label>Time <span class="req">*</span></label>
+          <input type="time" id="f_time" required>
+        </div>
+        <div class="form-field full">
+          <label>Beneficiary Name <span class="req">*</span></label>
+          <input type="text" id="f_name" required placeholder="e.g. Amal awaad mahgoub">
+        </div>
+        <div class="form-field">
+          <label>Card Number</label>
+          <input type="text" id="f_card" placeholder="Optional">
+        </div>
+        <div class="form-field">
+          <label>LOS</label>
+          <input type="text" id="f_los" placeholder="Optional">
+        </div>
+        <div class="form-field rtl-field">
+          <label>الطبيب المعالج</label>
+          <input type="text" id="f_physician" placeholder="اختياري">
+        </div>
+        <div class="form-field rtl-field">
+          <label>التشخيص</label>
+          <input type="text" id="f_diagnosis" placeholder="اختياري">
+        </div>
+        <div class="form-field rtl-field full">
+          <label>السعر التقديري للخدمه</label>
+          <input type="text" id="f_price" placeholder="اختياري">
+        </div>
+      </div>
+      <div class="form-actions">
+        <button type="submit">Generate Letter →</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ================= LETTER SCREEN ================= -->
+  <div id="letterScreen" class="hidden">
+  <div class="back-link" style="margin:0 auto 8px; max-width:794px; display:block;">
+    <a href="#" onclick="showForm(); return false;">&larr; Back to form</a>
+  </div>
+  <div class="toolbar">
+    <div class="hint">Click on any underlined value to edit it further if needed.</div>
+    <button onclick="window.print()">🖨 Print</button>
+  </div>
+  <div class="page">
+
+    <header class="header">
+      <div class="header-left">
+        <div class="brand">NEXtCARE</div>
+        Plot 14B01, Building A1, CFC, Fifth Settlement,<br>
+        New Cairo, Egypt.<br>
+        <b>24 Hours Claim Center</b><br>
+        Tel: (+)2-02-24632301&nbsp;&nbsp;Hotline: 19154&nbsp;&nbsp;Fax: (+)2-02-24632303/4<br>
+        e-mail: <a href="mailto:cs.eg@nextcarehealth.com" style="color:#0645AD;">cs.eg@nextcarehealth.com</a>
+      </div>
+      <svg class="logo" viewBox="0 0 180.2 55.4" xmlns="http://www.w3.org/2000/svg">
+        <style type="text/css">
+          .st0{fill:#203370;}
+          .st1{fill:#4BA38C;}
+        </style>
+        <path class="st0" d="M0.4,17.1h5.8v3.5c1.6-2.7,4.5-4.1,8.2-4.1c6,0,9.1,3.4,9.1,9.9v15.7h-5.8v-13c0-5.3-1.4-7.6-5.5-7.6
+          c-3.8,0-6,2.5-6,6.9v13.7H0.4V17.1z"/>
+        <path class="st0" d="M49.9,31.5H31.4c0.2,4,2.7,6.1,7,6.1c2.9,0,4.6-0.9,5.6-2.8h5.9c-0.8,4.7-5.5,7.9-11.5,7.9
+          c-7.9,0-12.8-5-12.8-13.1c0-8,4.9-13.1,12.6-13.1c7.1,0,12,4.8,12,11.9C50.1,29.3,50,30.1,49.9,31.5 M44.4,27.1
+          c-0.1-3.9-2.3-6-6.3-6c-4.1,0-6.6,2.5-6.7,6H44.4z"/>
+        <polygon class="st0" points="57.8,29.5 48.7,17.1 55.9,17.1 61.2,25.2 66.4,17.1 73.6,17.1 64.5,29.5 73.8,42.1 66.5,42.1
+          61.2,33.7 55.8,42.1 48.5,42.1 "/>
+        <path class="st0" d="M87,29.6c0-7.8,4.7-13.1,12.4-13.1c7,0,11.3,3.8,11.9,9.5h-5.8c-0.6-2.8-2.5-4.3-6-4.3c-4.1,0-6.6,2.8-6.6,7.9
+          c0,5.1,2.5,7.9,6.6,7.9c3.5,0,5.4-1.4,6-4.1h5.8c-0.5,5.6-4.9,9.3-11.9,9.3C91.7,42.7,87,37.4,87,29.6"/>
+        <path class="st0" d="M111.9,29.6c0-7.3,4.7-13.1,12.4-13.1c3.3,0,6.3,1.5,7.9,4v-3.4h5.8v25h-5.8v-3.4c-1.6,2.5-5,4-8,4
+          C116.2,42.7,111.9,36.9,111.9,29.6 M132.5,29.6c0-4.3-2.4-7.9-7.4-7.9c-4.6,0-7.3,3.4-7.3,7.9c0,4.6,2.7,7.9,7.3,7.9
+          C130,37.5,132.5,33.9,132.5,29.6"/>
+        <path class="st0" d="M141.3,17.1h5.8v4.8c0.9-3.5,3.9-5.1,6.7-5.1c0.9,0,1.7,0.1,2.3,0.2v5.4c-0.9-0.1-1.4-0.1-2.3-0.1
+          c-4.1,0-6.7,3.1-6.7,8.8v11.1h-5.8V17.1z"/>
+        <path class="st0" d="M180,31.5h-18.6c0.2,4,2.7,6.1,7,6.1c2.9,0,4.6-0.9,5.6-2.8h5.9c-0.8,4.7-5.5,7.9-11.5,7.9
+          c-7.9,0-12.8-5-12.8-13.1c0-8,4.9-13.1,12.6-13.1c7.1,0,12,4.8,12,11.9C180.2,29.3,180.1,30.1,180,31.5 M174.5,27.1
+          c-0.1-3.9-2.3-6-6.3-6c-4.1,0-6.6,2.5-6.7,6H174.5z"/>
+        <polygon class="st1" points="80.6,11.3 74.8,11.3 74.8,17.1 74.8,22 74.8,22.9 86.5,22.9 86.5,17.1 80.6,17.1 "/>
+        <path class="st0" d="M84.3,37.2c-2.3,0-3.6-0.5-3.6-4.9V23h-5.8v10.7c0,8.4,5.3,8.8,8.1,8.8c1.7,0,3.4-0.2,4.3-0.3v-5.2
+          C86.6,37.1,85.2,37.2,84.3,37.2"/>
+      </svg>
+    </header>
+
+    <h1 class="title">Discount Letter</h1>
+
+    <table class="to-from">
+      <tr>
+        <td class="rtl">To : <span class="editable" id="l_to" contenteditable="true" data-placeholder="اسم المستشفى" style="direction:rtl;"></span></td>
+        <td>From: <span class="editable" id="l_from" contenteditable="true" data-placeholder="Name"></span></td>
+      </tr>
+      <tr>
+        <td class="rtl">:</td>
+        <td>Date: <span class="editable" id="l_date" contenteditable="true" data-placeholder="dd/mm/yyyy"></span>
+          &nbsp;&nbsp;Time: <span class="editable" id="l_time" contenteditable="true" data-placeholder="hh:mm"></span>
+        </td>
+      </tr>
+    </table>
+
+    <div class="section-label">المستفيد / متلقي الخدمه</div>
+    <table>
+      <tr><td>Name : <span class="editable" id="l_name" contenteditable="true" data-placeholder="Beneficiary name"></span></td></tr>
+      <tr><td>Card Number : <span class="editable" id="l_card" contenteditable="true" data-placeholder="Card number"></span></td></tr>
+    </table>
+
+    <div class="section-label">الخدمه الخارجية</div>
+    <table>
+      <tr><td class="rtl">الطبيب المعالج: <span class="editable" id="l_physician" contenteditable="true" data-placeholder="اسم الطبيب"></span></td></tr>
+      <tr><td class="rtl">التشخيص: <span class="editable" id="l_diagnosis" contenteditable="true" data-placeholder="التشخيص"></span></td></tr>
+    </table>
+
+    <div class="section-label">شروط خاصه بالموافقه</div>
+    <table>
+      <tr>
+        <td style="width:50%;">LOS: <span class="editable" id="l_los" contenteditable="true" data-placeholder="Length of stay"></span></td>
+        <td class="rtl">السعر التقديري للخدمه <span class="editable" id="l_price" contenteditable="true" data-placeholder="السعر" style="direction:rtl;"></span></td>
+      </tr>
+      <tr>
+        <td colspan="2" class="price-note">
+          لا مانع من محاسبه العميل نقدا طبقا لاسعار تعاقد نيكست كير
+          <span class="underline">علما بان هذا الخطاب لا يضمن ان الخدمه سيتم الاستفاده منها نقدا طبقا لاسعار نيكست كير و تخضع للسياسة الداخليه لمقدم الخدمة</span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" class="valid-row">صالحة لمدة 7 ايام .</td>
+      </tr>
+      <tr>
+        <td colspan="2" class="approve-row">الموافقه علي حسب الاسعار المتعاقد عليها بين مقدم الخدمه و نكست كير</td>
+      </tr>
+    </table>
+
+    <div class="notes">
+      <div style="font-weight:700; text-decoration:underline; margin-bottom:6px;">ملاحظات هامه:</div>
+      <ol>
+        <li>في حالة وجود أي تعديلات علي الموافقه, يجب أبلاغ قسم الموافقات في أسرع وقت لتعديل الموافقه المرفقه. في حالة عدم أبلاغ قسم الموافقات, قد يتم خصم جزء أو كل المطالبه المرفقه.</li>
+        <li>يتم أصدار الموافقه طبقا للبيانات المرسله من مقدم الخدمه. في حالة وجود اي نقص أو خطأ في البيانات المرسله, يحق للشركه سحب أو الغاء الموافقه المرسله.</li>
+        <li>يجب تقديم نسخه من الموافقه المرسله مع المطالبه.</li>
+        <li>تقوم الشركه بدفع المطالبات التزاما بالموافقه الصادره و تقوم بأصدار الفاتوره النهائيه بعد المراجعه الماليه و الطبيه و بما يتفق مع جميع اللوائح الداخليه و المتعارف عليها في المراجعه.</li>
+        <li>في حالة وجود أي استفسارات برجاء الاتصال بخدمة العملاء :24/7 24632301-02 , أو الأيميل: <a href="mailto:cs.eg@nextcarehealth.com">cs.eg@nextcarehealth.com</a></li>
+      </ol>
+    </div>
+
+    <hr class="rule">
+    <div class="signoff">
+      Best Regards
+      <div class="company">NEXtCARE</div>
+    </div>
+
+    <div class="footer">
+      This fax was generated by TATSH - Copyright NEXtCARE © 2009
+    </div>
+
+  </div>
+  </div>
+
+  <script>
+    function pad(n){ return String(n).padStart(2,'0'); }
+
+    function formatDate(iso){
+      // iso: yyyy-mm-dd -> d/m/yyyy (matches original letter style)
+      if(!iso) return '';
+      const [y,m,d] = iso.split('-');
+      return `${parseInt(d,10)}/${parseInt(m,10)}/${y}`;
+    }
+    function formatTime(t){
+      // t: HH:MM (24h) -> 12h with AM/PM
+      if(!t) return '';
+      let [h,m] = t.split(':').map(Number);
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      h = h % 12; if(h === 0) h = 12;
+      return `${h}:${pad(m)} ${ampm}`;
+    }
+
+    function showForm(){
+      document.getElementById('formScreen').classList.remove('hidden');
+      document.getElementById('letterScreen').classList.add('hidden');
+      window.scrollTo(0,0);
+    }
+    function showLetter(){
+      document.getElementById('formScreen').classList.add('hidden');
+      document.getElementById('letterScreen').classList.remove('hidden');
+      window.scrollTo(0,0);
+    }
+
+    document.getElementById('letterForm').addEventListener('submit', function(e){
+      e.preventDefault();
+
+      const from = document.getElementById('f_from').value.trim();
+      const to = document.getElementById('f_to').value.trim();
+      const date = document.getElementById('f_date').value;
+      const time = document.getElementById('f_time').value;
+      const name = document.getElementById('f_name').value.trim();
+
+      if(!from || !to || !date || !time || !name){
+        alert('Please fill in all required fields: From, To, Date, Time, and Name.');
+        return;
+      }
+
+      const blank = '‎_______________';
+
+      document.getElementById('l_from').textContent = from;
+      document.getElementById('l_to').textContent = to;
+      document.getElementById('l_date').textContent = formatDate(date);
+      document.getElementById('l_time').textContent = formatTime(time);
+      document.getElementById('l_name').textContent = name;
+
+      const card = document.getElementById('f_card').value.trim();
+      const physician = document.getElementById('f_physician').value.trim();
+      const diagnosis = document.getElementById('f_diagnosis').value.trim();
+      const los = document.getElementById('f_los').value.trim();
+      const price = document.getElementById('f_price').value.trim();
+
+      document.getElementById('l_card').textContent = card || blank;
+      document.getElementById('l_physician').textContent = physician || blank;
+      document.getElementById('l_diagnosis').textContent = diagnosis || blank;
+      document.getElementById('l_los').textContent = los || blank;
+      document.getElementById('l_price').textContent = price || blank;
+
+      showLetter();
+    });
+  </script>
+</body>
+</html>
